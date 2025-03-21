@@ -36,10 +36,9 @@ Snippout is a personal code snippet library that helps developers store, organiz
 
 ```
 snippout/
-├── frontend/        # React web application
-├── backend/         # Express API server
-├── vscode-extension/  # VS Code integration
-└── shared/          # Shared types and utilities
+├── client/        # React web application
+├── server/         # Express API server
+└── vscode-extension/  # VS Code integration
 ```
 
 ## 🚧 Project Status
