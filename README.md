@@ -12,7 +12,6 @@ Snippout is a personal code snippet library that helps developers store, organiz
   - Store and organize personal code snippets
   - Tag-based organization system
   - Powerful search capabilities
-  - Snippet versioning
 
 - **VS Code Integration**
   - Insert snippets directly into your editor
