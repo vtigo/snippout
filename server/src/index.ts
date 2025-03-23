@@ -1,8 +1,8 @@
 import cors from "cors";
 import dotenv from "dotenv";
 import express, { Express, Request, Response, NextFunction } from "express";
-import conn from "./db/conn";
 import router from "./routes";
+import connectDB from "./config/db";
 
 // Load environment variables
 dotenv.config();
@@ -35,7 +35,7 @@ const startServer = async () => {
       throw new Error("DATABASE_URL is not defined");
     }
 
-    await conn(dbUrl);
+    await connectDB(dbUrl);
     console.log("Connected to database");
 
     app.listen(PORT, () => {
