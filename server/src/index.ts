@@ -1,6 +1,7 @@
-import express, { Express, Request, Response } from "express"
-import cors from "cors"
-import dotenv from "dotenv"
+import cors from "cors";
+import dotenv from "dotenv";
+import express, { Express } from "express";
+import conn from "./db/conn";
 
 dotenv.config();
 
@@ -12,9 +13,8 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.get("/", (req: Request, res: Response) => {
-  res.send("Hello from server");
-});
+// Connect to database
+conn(process.env.DATABASE_URL as string);
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
