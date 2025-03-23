@@ -12,7 +12,6 @@ Snippout is a personal code snippet library that helps developers store, organiz
   - Store and organize personal code snippets
   - Tag-based organization system
   - Powerful search capabilities
-  - Snippet versioning
 
 - **VS Code Integration**
   - Insert snippets directly into your editor
@@ -36,10 +35,9 @@ Snippout is a personal code snippet library that helps developers store, organiz
 
 ```
 snippout/
-├── frontend/        # React web application
-├── backend/         # Express API server
-├── vscode-extension/  # VS Code integration
-└── shared/          # Shared types and utilities
+├── client/        # React web application
+├── server/         # Express API server
+└── vscode-extension/  # VS Code integration
 ```
 
 ## 🚧 Project Status
