@@ -21,7 +21,7 @@ async function update(userId: string, dto: any) {
 }
 
 async function remove(userId: string) {
-  const user = await User.deleteOne({
+  await User.deleteOne({
     _id: userId
   })
 
