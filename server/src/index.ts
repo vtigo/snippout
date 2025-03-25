@@ -3,15 +3,15 @@ import dotenv from "dotenv";
 import express, { Express, Request, Response, NextFunction } from "express";
 import router from "./routes";
 import connectDB from "./config/db";
+import { errorHandler } from "./middleware/error.middleware";
 
-// Load environment variables
 dotenv.config();
 
 // Initialize app
 const PORT = process.env.PORT || 5000;
 const app: Express = express();
 
-// Middleware
+// Middlewares
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -19,14 +19,11 @@ app.use(express.urlencoded({ extended: true }));
 // Routes
 app.use("/api", router);
 
+// Error handling
 app.use((req: Request, res: Response) => {
   res.status(404).json({ message: "Resource not found" });
 });
-
-app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-  console.error(err.stack);
-  res.status(500).json({ message: "Internal server error" });
-});
+app.use(errorHandler)
 
 const startServer = async () => {
   try {

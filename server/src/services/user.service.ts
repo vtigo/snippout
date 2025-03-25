@@ -1,31 +1,97 @@
 import { User } from "../models/user.model";
+import mongoose from "mongoose";
+import { DatabaseError, NotFoundError, ValidationError } from "../utils/errors";
 
-async function getAll() {
-  const users = User.find()
-  return users
+export async function getAll() {
+  try {
+    return await User.find({ deleted_at: null });
+  } catch (error) {
+    throw new DatabaseError("Failed to retrieve users", error);
+  }
 }
 
-async function get(userId: string) {
-  const user = await User.find({ _id: userId })
-  return user
+export async function get(userId: string) {
+  try {
+    const user = await User.findById(userId);
+    if (!user) {
+      throw new NotFoundError("User", userId);
+    }
+    return user;
+  } catch (error) {
+    if (error instanceof NotFoundError) {
+      throw error;
+    }
+    if (error instanceof mongoose.Error.CastError) {
+      throw new NotFoundError("User", userId);
+    }
+    throw new DatabaseError("Failed to retrieve user", error);
+  }
 }
 
-async function create(dto: any) {
-  const user = await User.create(dto)
-  return user
+export async function create(data: any) {
+  try {
+    return await User.create(data);
+  } catch (error: any) {
+    if (error instanceof mongoose.Error.ValidationError) {
+      throw new ValidationError("Invalid user data", error.errors);
+    }
+    if (error.code === 11000) {
+      throw new ValidationError("User with this email already exists", error);
+    }
+    throw new DatabaseError("Failed to create user", error);
+  }
 }
 
-async function update(userId: string, dto: any) {
-  const user = await User.find({ _id: userId }).updateOne(dto)
-  return user
+export async function update(userId: string, data: any) {
+  try {
+    const user = await User.findByIdAndUpdate(
+      userId,
+      data,
+      { new: true, runValidators: true }
+    );
+
+    if (!user) {
+      throw new NotFoundError("User", userId);
+    }
+
+    return user;
+  } catch (error: any) {
+    if (error instanceof NotFoundError) {
+      throw error;
+    }
+    if (error instanceof mongoose.Error.ValidationError) {
+      throw new ValidationError("Invalid user data", error.errors);
+    }
+    if (error instanceof mongoose.Error.CastError) {
+      throw new NotFoundError("User", userId);
+    }
+    if (error.code === 11000) {
+      throw new ValidationError("User with this email already exists", error);
+    }
+    throw new DatabaseError("Failed to update user", error);
+  }
 }
 
-async function remove(userId: string) {
-  await User.deleteOne({
-    _id: userId
-  })
+export async function remove(userId: string) {
+  try {
+    const user = await User.findByIdAndUpdate(
+      userId,
+      { deleted_at: new Date() },
+      { new: true }
+    );
 
-  return true;
+    if (!user) {
+      throw new NotFoundError("User", userId);
+    }
+
+    return user;
+  } catch (error) {
+    if (error instanceof NotFoundError) {
+      throw error;
+    }
+    if (error instanceof mongoose.Error.CastError) {
+      throw new NotFoundError("User", userId);
+    }
+    throw new DatabaseError("Failed to delete user", error);
+  }
 }
-
-export { getAll, get, create, update, remove }

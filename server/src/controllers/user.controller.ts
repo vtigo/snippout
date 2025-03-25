@@ -1,15 +1,18 @@
-import { Request, Response, NextFunction } from "express";
+import { NextFunction, Request, Response } from "express";
 import * as userService from "../services/user.service";
-import { ValidateBody, ValidateParams } from "../validation/validate.decorator";
-import { createUserSchema, updateUserSchema } from "../validation/schemas/user.schema";
 import { idParamSchema } from "../validation/schemas/mongo.schema";
+import { createUserSchema, updateUserSchema } from "../validation/schemas/user.schema";
+import { ValidateBody, ValidateParams } from "../validation/validate.decorator";
 
 class UserController {
   async getAll(req: Request, res: Response, next: NextFunction) {
     try {
-      res.json(await userService.getAll());
-    } catch (error: any) {
-      console.error(`error while getting the users`, error.message);
+      const users = await userService.getAll();
+      res.json({
+        status: "success",
+        data: users
+      });
+    } catch (error) {
       next(error);
     }
   }
@@ -17,9 +20,12 @@ class UserController {
   @ValidateParams(idParamSchema)
   async get(req: Request, res: Response, next: NextFunction) {
     try {
-      res.json(await userService.get(req.params.id));
-    } catch (error: any) {
-      console.error(`error while getting the user`, error.message);
+      const user = await userService.get(req.params.id);
+      res.json({
+        status: "success",
+        data: user
+      });
+    } catch (error) {
       next(error);
     }
   }
@@ -27,9 +33,12 @@ class UserController {
   @ValidateBody(createUserSchema)
   async create(req: Request, res: Response, next: NextFunction) {
     try {
-      res.json(await userService.create(req.body));
-    } catch (error: any) {
-      console.error(`error while creating the user`, error.message);
+      const newUser = await userService.create(req.body);
+      res.status(201).json({
+        status: "success",
+        data: newUser
+      });
+    } catch (error) {
       next(error);
     }
   }
@@ -37,15 +46,17 @@ class UserController {
   @ValidateParams(idParamSchema)
   @ValidateBody(updateUserSchema)
   async update(req: Request, res: Response, next: NextFunction) {
-    const id = req.params.id;
-    const data = {
-      ...req.body,
-      updated_at: new Date(),
-    }
     try {
-      res.json(await userService.update(id, data));
-    } catch (error: any) {
-      console.error(`error while updating the user`, error.message);
+      const updatedUser = await userService.update(req.params.id, {
+        ...req.body,
+        updated_at: new Date(),
+      });
+
+      res.json({
+        status: "success",
+        data: updatedUser
+      });
+    } catch (error) {
       next(error);
     }
   }
@@ -53,9 +64,12 @@ class UserController {
   @ValidateParams(idParamSchema)
   async remove(req: Request, res: Response, next: NextFunction) {
     try {
-      res.json(await userService.remove(req.params.id));
-    } catch (error: any) {
-      console.error(`error while deleting the user`, error.message);
+      await userService.remove(req.params.id);
+      res.json({
+        status: "success",
+        message: "User successfully deleted"
+      });
+    } catch (error) {
       next(error);
     }
   }
