@@ -65,14 +65,14 @@ This project is currently under development.
 
    **Frontend:**
    ```bash
-   cd frontend
+   cd client
    pnpm install
    pnpm dev
    ```
 
    **Backend:**
    ```bash
-   cd backend
+   cd server
    pnpm install
    pnpm dev
    ```
