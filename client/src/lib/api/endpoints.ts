@@ -3,6 +3,7 @@ const ApiEndpoints = {
     login: "/auth/login",
     logout: "/auth/logout",
     register: "/auth/register",
+    check: "/auth/check"
   },
   user: {
     getAll: "/user",
