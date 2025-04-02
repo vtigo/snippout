@@ -9,8 +9,8 @@ const ApiEndpoints = {
     getAll: "/user",
     getById: (id: string) => `/user/${id}`,
     create: "/user",
-    update: "/user",
-    delete: "/user",
+    update: (id: string) => `/user/${id}`,
+    delete: (id: string) => `/user/${id}`,
   }
 }
 

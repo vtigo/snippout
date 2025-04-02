@@ -15,9 +15,9 @@ export async function getUserById(id: string) {
 }
 
 export async function updateUser(id: string, data: Partial<CreateUserDto>) {
-  return apiRequest('patch', ApiEndpoints.user.getById(id), { data });
+  return apiRequest('patch', ApiEndpoints.user.update(id), { data });
 }
 
 export async function deleteUser(id: string) {
-  return apiRequest('delete', ApiEndpoints.user.getById(id));
+  return apiRequest('delete', ApiEndpoints.user.delete(id));
 }
