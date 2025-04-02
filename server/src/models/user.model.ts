@@ -22,7 +22,6 @@ const UserSchema = new mongoose.Schema({
     required: true,
     minlength: [8, 'Password must be at least 8 characters']
   },
-  deleted_at: Date
 }, { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } });
 
 // UserSchema.pre('save', function (next) {

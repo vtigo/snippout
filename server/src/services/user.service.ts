@@ -4,7 +4,7 @@ import { DatabaseError, NotFoundError, ValidationError } from "../utils/errors";
 
 export async function getAll() {
   try {
-    return await User.find({ deleted_at: null });
+    return await User.find();
   } catch (error) {
     throw new DatabaseError("Failed to retrieve users", error);
   }
@@ -74,11 +74,7 @@ export async function update(userId: string, data: any) {
 
 export async function remove(userId: string) {
   try {
-    const user = await User.findByIdAndUpdate(
-      userId,
-      { deleted_at: new Date() },
-      { new: true }
-    );
+    const user = await User.deleteOne({ _id: userId });
 
     if (!user) {
       throw new NotFoundError("User", userId);

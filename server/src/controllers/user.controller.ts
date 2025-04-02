@@ -8,10 +8,7 @@ class UserController {
   async getAll(req: Request, res: Response, next: NextFunction) {
     try {
       const users = await userService.getAll();
-      res.json({
-        status: "success",
-        data: users
-      });
+      res.json(users);
     } catch (error) {
       next(error);
     }
@@ -21,10 +18,7 @@ class UserController {
   async get(req: Request, res: Response, next: NextFunction) {
     try {
       const user = await userService.get(req.params.id);
-      res.json({
-        status: "success",
-        data: user
-      });
+      res.json(user);
     } catch (error) {
       next(error);
     }
@@ -34,10 +28,7 @@ class UserController {
   async create(req: Request, res: Response, next: NextFunction) {
     try {
       const newUser = await userService.create(req.body);
-      res.status(201).json({
-        status: "success",
-        data: newUser
-      });
+      res.status(201).json(newUser);
     } catch (error) {
       next(error);
     }
@@ -52,10 +43,7 @@ class UserController {
         updated_at: new Date(),
       });
 
-      res.json({
-        status: "success",
-        data: updatedUser
-      });
+      res.json(updatedUser);
     } catch (error) {
       next(error);
     }
@@ -65,10 +53,7 @@ class UserController {
   async remove(req: Request, res: Response, next: NextFunction) {
     try {
       await userService.remove(req.params.id);
-      res.json({
-        status: "success",
-        message: "User successfully deleted"
-      });
+      res.json(true);
     } catch (error) {
       next(error);
     }
