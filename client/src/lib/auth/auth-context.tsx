@@ -1,8 +1,8 @@
-import type { AuthContext, AuthUser } from "@/types/auth";
-import { createContext, useEffect, useState } from "react";
+import type { AuthContextType, AuthUser } from "@/types/auth";
+import { createContext, useContext, useEffect, useState } from "react";
 import { checkAuthStatus, loginRequest, logoutRequest } from "../api/auth";
 
-const AuthContext = createContext<AuthContext | null>(null);
+export const AuthContext = createContext<AuthContextType | null>(null);
 
 interface AuthProviderProps {
   children: React.ReactNode;
@@ -20,7 +20,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       }
       setLoading(false)
     }
-    
+
     checkAuth()
   }, [])
 
@@ -40,7 +40,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
   }
 
-  const value: AuthContext = {
+  const value: AuthContextType = {
     user,
     loading,
     login,
@@ -50,3 +50,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }
+
+export const useAuth = (): AuthContextType => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+  return context;
+};

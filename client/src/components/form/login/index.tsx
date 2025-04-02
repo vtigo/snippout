@@ -1,19 +1,30 @@
 
+import { Button } from "@/components/ui/button"
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { useAuth } from "@/lib/auth/auth-context"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import { Button } from "../../ui/button"
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../../ui/form"
-import { Input } from "../../ui/input"
+import { useNavigate } from "react-router"
 import { LoginFormData, loginFormSchema } from "./schema"
 
 function LoginForm() {
+  const { login } = useAuth()
+  const navigate = useNavigate()
+
   const form = useForm<LoginFormData>({
     resolver: zodResolver(loginFormSchema)
   })
 
   async function onSubmit(values: LoginFormData) {
-    // TODO: Create account and login
-    console.log(values)
+    const { email, password } = values
+    const loginSucess = await login(email, password)
+
+    if (!loginSucess) {
+      // TODO: alert error
+    }
+
+    navigate("/dashboard")
   }
 
   return (

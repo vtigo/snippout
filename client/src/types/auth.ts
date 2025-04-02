@@ -5,7 +5,7 @@ export interface AuthUser {
   role?: string;
 }
 
-export interface AuthContext {
+export interface AuthContextType {
   user: AuthUser | null;
   isAuthenticated: boolean;
   login: (email: string, password: string) => Promise<boolean>;
