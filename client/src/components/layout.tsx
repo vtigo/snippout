@@ -7,10 +7,9 @@ function Layout() {
   const location = useLocation()
   const { isAuthenticated } = useAuth()
 
-  const headerlessRoutes = ["/", "/auth"]
+  const headerlessRoutes = [""]
 
-  // const shouldRenderHeader = !headerlessRoutes.includes(location.pathname)
-  const shouldRenderHeader = true
+  const shouldRenderHeader = !headerlessRoutes.includes(location.pathname)
 
   return (
     <div className="app-container">
