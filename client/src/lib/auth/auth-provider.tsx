@@ -13,13 +13,15 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    async () => {
+    const checkAuth = async () => {
       const response = await checkAuthStatus()
       if (response.success) {
         setUser(response.data)
       }
       setLoading(false)
     }
+    
+    checkAuth()
   }, [])
 
   const login = async (email: string, password: string) => {
