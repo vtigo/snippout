@@ -8,9 +8,12 @@ import { RegistrationFormData, registrationFormSchema } from "./schema"
 import { createUser } from "@/lib/api/user"
 import { toast } from "sonner"
 import { useAuth } from "@/lib/auth/auth-context"
+import { useNavigate } from "react-router"
 
 function RegistrationForm() {
+  const navigate = useNavigate()
   const { login, logout, isAuthenticated } = useAuth()
+
   const form = useForm<RegistrationFormData>({
     resolver: zodResolver(registrationFormSchema)
   })
@@ -36,6 +39,8 @@ function RegistrationForm() {
     if (!loginSuccess) {
       toast("Account created sucessfully, try loggin in.")
     }
+
+    navigate("/dashboard")
   }
 
   return (

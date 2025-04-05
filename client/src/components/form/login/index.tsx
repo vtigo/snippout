@@ -7,6 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { useNavigate } from "react-router"
 import { LoginFormData, loginFormSchema } from "./schema"
+import { toast } from "sonner"
 
 function LoginForm() {
   const { login } = useAuth()
@@ -21,7 +22,8 @@ function LoginForm() {
     const loginSucess = await login(email, password)
 
     if (!loginSucess) {
-      // TODO: alert error
+      toast("Authentication failed")
+      return
     }
 
     navigate("/dashboard")
