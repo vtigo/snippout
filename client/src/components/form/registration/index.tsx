@@ -10,7 +10,7 @@ import { toast } from "sonner"
 import { useAuth } from "@/lib/auth/auth-context"
 
 function RegistrationForm() {
-  const { login } = useAuth()
+  const { login, logout, isAuthenticated } = useAuth()
   const form = useForm<RegistrationFormData>({
     resolver: zodResolver(registrationFormSchema)
   })
@@ -31,11 +31,11 @@ function RegistrationForm() {
       return
     }
 
-    // const loginSuccess = await login(email, password)
+    const loginSuccess = await login(email, password)
 
-    // if (!loginSuccess) {
-    //   toast("Account created sucessfully, try loggin in.")
-    // }
+    if (!loginSuccess) {
+      toast("Account created sucessfully, try loggin in.")
+    }
   }
 
   return (
@@ -98,6 +98,8 @@ function RegistrationForm() {
         />
 
         <Button disabled={form.formState.isSubmitting} type="submit">Sign up</Button>
+        <Button onClick={() => console.log(isAuthenticated)}>Check auth</Button>
+        <Button onClick={() => logout()}>Logout</Button>
       </form>
     </Form>
   )
