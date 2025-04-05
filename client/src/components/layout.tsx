@@ -12,7 +12,7 @@ import { Link, Outlet, useLocation } from 'react-router';
 function Layout() {
   const location = useLocation()
   const { isAuthenticated, user, logout } = useAuth()
-  const { setTheme, theme } = useTheme()
+  const { setTheme } = useTheme()
 
   const headerlessRoutes = [""]
 
