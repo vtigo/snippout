@@ -5,6 +5,7 @@ import router from "./routes";
 import connectDB from "./config/db";
 import { errorHandler } from "./middleware/error.middleware";
 import cookieParser from "cookie-parser"
+import { optionalAuthenticate } from "./middleware/auth.middleware";
 
 dotenv.config();
 
@@ -20,6 +21,7 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use(optionalAuthenticate)
 
 // Routes
 app.use("/api", router);

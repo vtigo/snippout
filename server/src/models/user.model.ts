@@ -1,7 +1,21 @@
 import mongoose from "mongoose";
+import bcrypt from "bcryptjs";
 
-// TODO: define actual user schema
-const UserSchema = new mongoose.Schema({
+interface IUser {
+  username: string;
+  email: string;
+  password: string;
+  created_at: Date;
+  updated_at: Date;
+}
+
+interface IUserMethods {
+  comparePassword(candidatePassword: string): Promise<boolean>;
+}
+
+type UserModel = mongoose.Model<IUser, {}, IUserMethods>;
+
+const UserSchema = new mongoose.Schema<IUser, UserModel, IUserMethods>({
   username: {
     type: String,
     required: true,
@@ -24,14 +38,32 @@ const UserSchema = new mongoose.Schema({
   },
 }, { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } });
 
-// UserSchema.pre('save', function (next) {
-//   this.updated_at; = Date.now();
-//   next();
-// });
+// Hash the password before saving
+UserSchema.pre('save', async function (next) {
+  // Only hash the password if it's modified (or new)
+  if (!this.isModified('password')) return next();
 
-const User = mongoose.model("User", UserSchema);
+  try {
+    // Generate a salt
+    const salt = await bcrypt.genSalt(10);
+    // Hash the password with salt
+    this.password = await bcrypt.hash(this.password, salt);
+    next();
+  } catch (error: any) {
+    next(error);
+  }
+});
+
+// Add a method to compare passwords
+UserSchema.methods.comparePassword = async function (candidatePassword: string): Promise<boolean> {
+  return bcrypt.compare(candidatePassword, this.password);
+};
+
+const User = mongoose.model<IUser, UserModel>("User", UserSchema);
 
 export {
   User,
-  UserSchema
-}
+  UserSchema,
+  IUser,
+  IUserMethods
+};
