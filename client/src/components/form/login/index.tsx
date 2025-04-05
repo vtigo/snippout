@@ -60,7 +60,7 @@ function LoginForm() {
           )}
         />
 
-        <Button type="submit">Sign in</Button>
+        <Button disabled={form.formState.isSubmitting} type="submit">Sign in</Button>
       </form>
     </Form>
   )

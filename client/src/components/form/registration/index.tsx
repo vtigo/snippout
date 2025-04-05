@@ -103,8 +103,6 @@ function RegistrationForm() {
         />
 
         <Button disabled={form.formState.isSubmitting} type="submit">Sign up</Button>
-        <Button onClick={() => console.log(isAuthenticated)}>Check auth</Button>
-        <Button onClick={() => logout()}>Logout</Button>
       </form>
     </Form>
   )
