@@ -36,7 +36,7 @@ export async function create(data: any) {
       throw new ValidationError("Invalid user data", error.errors);
     }
     if (error.code === 11000) {
-      throw new ValidationError("User with this email already exists", error);
+      throw new ValidationError("User already exists", error);
     }
     throw new DatabaseError("Failed to create user", error);
   }
