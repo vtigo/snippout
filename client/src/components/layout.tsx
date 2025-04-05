@@ -45,7 +45,7 @@ function Layout() {
                     <DropdownMenuGroup>
                       <DropdownMenuItem disabled>
                         <User />
-                        <span>Profile</span>
+                        <span>Account</span>
                       </DropdownMenuItem>
                       <DropdownMenuItem disabled>
                         <Settings />
