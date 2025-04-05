@@ -1,21 +1,14 @@
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAuth } from "@/lib/auth/auth-context";
 
 function DashboardPage() {
-  const { user, logout } = useAuth();
-
-  const handleLogout = async () => {
-    console.log(user)
-    // The auth context should handle the redirect
-  };
+  const { user } = useAuth();
 
   return (
     <section className="py-24">
       <div className="flex flex-col gap-8">
         <div className="flex justify-between items-center">
           <h1 className="text-3xl font-bold">Dashboard</h1>
-          <Button variant="outline" onClick={handleLogout}>Logout</Button>
         </div>
 
         <Card>

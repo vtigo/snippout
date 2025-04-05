@@ -1,5 +1,5 @@
 import Layout from "@/components/layout"
-import ProtectedRoute from "@/components/protected-route"
+import { ProtectedRoute, PreAuthRoute } from "@/components/protected-route"
 import { AuthProvider } from "@/lib/auth/auth-context"
 import AuthPage from "@/pages/auth.page"
 import DashboardPage from "@/pages/dashboard.page"
@@ -14,7 +14,12 @@ function App() {
           <Route path="/" element={<Layout />}>
             {/* Public routes */}
             <Route index element={<HomePage />} />
-            <Route path="/auth" element={<AuthPage />} />
+
+            <Route path="/auth" element={
+              <PreAuthRoute>
+                <AuthPage />
+              </PreAuthRoute>
+            } />
 
             {/* Protected routes */}
             <Route path="/dashboard" element={
