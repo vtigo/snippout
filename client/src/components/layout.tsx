@@ -6,7 +6,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { Toaster } from '@/components/ui/sonner';
 import { useAuth } from '@/lib/auth/auth-context';
 import { DropdownMenuGroup, DropdownMenuSub } from '@radix-ui/react-dropdown-menu';
-import { LogOut, Moon, Settings, Sun, User, Laptop, PanelTop } from 'lucide-react';
+import { Laptop, LogOut, Moon, Settings, Sun, User } from 'lucide-react';
 import { Link, Outlet, useLocation } from 'react-router';
 
 function Layout() {
@@ -19,8 +19,6 @@ function Layout() {
   const shouldRenderHeader = !headerlessRoutes.includes(location.pathname)
 
   const isCurrentRoute = (route: string) => location.pathname.includes(route)
-
-  console.log(theme)
 
   return (
     <div className="app-container">
