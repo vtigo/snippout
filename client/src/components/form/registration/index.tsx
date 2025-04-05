@@ -12,7 +12,7 @@ import { useNavigate } from "react-router"
 
 function RegistrationForm() {
   const navigate = useNavigate()
-  const { login, logout, isAuthenticated } = useAuth()
+  const { login } = useAuth()
 
   const form = useForm<RegistrationFormData>({
     resolver: zodResolver(registrationFormSchema)
