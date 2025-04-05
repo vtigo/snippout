@@ -6,12 +6,12 @@ function DashboardPage() {
   const { user, logout } = useAuth();
 
   const handleLogout = async () => {
-    await logout();
+    console.log(user)
     // The auth context should handle the redirect
   };
 
   return (
-    <section className="py-12">
+    <section className="py-24">
       <div className="flex flex-col gap-8">
         <div className="flex justify-between items-center">
           <h1 className="text-3xl font-bold">Dashboard</h1>

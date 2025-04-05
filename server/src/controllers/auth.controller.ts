@@ -4,7 +4,6 @@ import { generateToken } from "../utils/jwt";
 import { ValidateBody } from "../validation/validate.decorator";
 import { loginSchema, registerSchema } from "../validation/schemas/auth.schema";
 
-// Cookie options
 const cookieOptions = {
   httpOnly: true, // Cannot be accessed by client-side JavaScript
   secure: process.env.NODE_ENV === 'production', // Only sent over HTTPS in production
@@ -21,16 +20,11 @@ class AuthController {
     try {
       const user = await authService.registerUser(req.body);
 
-      // Generate token
       const token = generateToken(user);
 
-      // Set token as HTTP-only cookie
       res.cookie('token', token, cookieOptions);
 
-      res.status(201).json({
-        status: 'success',
-        data: user
-      });
+      res.status(201).json(user);
     } catch (error) {
       next(error);
     }
@@ -47,13 +41,9 @@ class AuthController {
       // Generate token
       const token = generateToken(user);
 
-      // Set token as HTTP-only cookie
       res.cookie('token', token, cookieOptions);
 
-      res.json({
-        status: 'success',
-        data: user
-      });
+      res.json(user);
     } catch (error) {
       next(error);
     }
@@ -63,13 +53,8 @@ class AuthController {
    * Logout a user
    */
   async logout(_req: Request, res: Response): Promise<void> {
-    // Clear the auth cookie
     res.clearCookie('token');
-
-    res.json({
-      status: 'success',
-      message: 'Logged out successfully'
-    });
+    res.json('Logged out successfully');
   }
 
   /**
@@ -87,10 +72,7 @@ class AuthController {
 
       const user = await authService.checkStatus(req.user.id);
 
-      res.json({
-        status: 'success',
-        data: user
-      });
+      res.json(user);
     } catch (error) {
       next(error);
     }
