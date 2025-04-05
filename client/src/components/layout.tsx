@@ -1,22 +1,26 @@
 import { Container } from '@/components/container';
+import { useTheme } from '@/components/theme-provider';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuPortal, DropdownMenuSeparator, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Toaster } from '@/components/ui/sonner';
 import { useAuth } from '@/lib/auth/auth-context';
-import { DropdownMenuGroup } from '@radix-ui/react-dropdown-menu';
-import { LogOut, Settings, User } from 'lucide-react';
+import { DropdownMenuGroup, DropdownMenuSub } from '@radix-ui/react-dropdown-menu';
+import { LogOut, Moon, Settings, Sun, User, Laptop, PanelTop } from 'lucide-react';
 import { Link, Outlet, useLocation } from 'react-router';
 
 function Layout() {
   const location = useLocation()
   const { isAuthenticated, user, logout } = useAuth()
+  const { setTheme, theme } = useTheme()
 
   const headerlessRoutes = [""]
 
   const shouldRenderHeader = !headerlessRoutes.includes(location.pathname)
 
   const isCurrentRoute = (route: string) => location.pathname.includes(route)
+
+  console.log(theme)
 
   return (
     <div className="app-container">
@@ -47,10 +51,34 @@ function Layout() {
                         <User />
                         <span>Account</span>
                       </DropdownMenuItem>
+
                       <DropdownMenuItem disabled>
                         <Settings />
                         <span>Settings</span>
                       </DropdownMenuItem>
+
+                      <DropdownMenuSub>
+                        <DropdownMenuSubTrigger>
+                          <span>Theme</span>
+                        </DropdownMenuSubTrigger>
+                        <DropdownMenuPortal>
+                          <DropdownMenuSubContent>
+                            <DropdownMenuItem onClick={() => setTheme("light")}>
+                              <Sun />
+                              <span>Light</span>
+                            </DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => setTheme("dark")}>
+                              <Moon />
+                              <span>Dark</span>
+                            </DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => setTheme("system")}>
+                              <Laptop />
+                              <span>System</span>
+                            </DropdownMenuItem>
+                          </DropdownMenuSubContent>
+                        </DropdownMenuPortal>
+                      </DropdownMenuSub>
+
                     </DropdownMenuGroup>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem onClick={logout}>

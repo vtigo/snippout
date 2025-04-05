@@ -1,14 +1,9 @@
 import LoginForm from "@/components/form/login";
 import RegistrationForm from "@/components/form/registration";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { useCallback, useState } from "react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 function AuthPage() {
-  const [formType, setFormType] = useState<"register" | "login">("register")
-
-  const handleSwitchToLogin = useCallback(() => setFormType("login"), []);
-  const handleSwitchToRegister = useCallback(() => setFormType("register"), []);
 
   const formComponents = {
     register: (
@@ -20,9 +15,6 @@ function AuthPage() {
         <CardContent>
           <RegistrationForm />
         </CardContent>
-        <CardFooter>
-          <p className="text-sm">Already have an account? <Button onClick={handleSwitchToLogin} variant="link">sign in</Button></p>
-        </CardFooter>
       </Card>
     ),
     login: (
@@ -34,19 +26,24 @@ function AuthPage() {
         <CardContent>
           <LoginForm />
         </CardContent>
-        <CardFooter>
-          <p className="text-sm">Dont have an account? <Button onClick={handleSwitchToRegister} variant="link">sign up</Button></p>
-        </CardFooter>
       </Card>
     )
   };
 
   return (
-    <section id="auth" className="flex justify-center items-center w-full min-h-screen">
+    <section id="auth" className="flex justify-center pt-24 w-full min-h-screen">
       <div className="w-full max-w-5xl">
-        <div className="flex flex-col gap-12 items-center">
+        <div className="flex flex-col gap-8 items-center">
           <h1 className="text-2xl">Welcome to Snippout</h1>
-          {formComponents[formType]}
+
+          <Tabs defaultValue="register" className="w-full max-w-2xl">
+            <TabsList className="w-full">
+              <TabsTrigger value="login">Sign in</TabsTrigger>
+              <TabsTrigger value="register">Sign up</TabsTrigger>
+            </TabsList>
+            <TabsContent value="login">{formComponents["login"]}</TabsContent>
+            <TabsContent value="register">{formComponents["register"]}</TabsContent>
+          </Tabs>
         </div>
       </div>
     </section>
