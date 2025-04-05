@@ -3,7 +3,6 @@ import RegistrationForm from "@/components/form/registration";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { useCallback, useState } from "react";
-import { NavLink } from "react-router";
 
 function AuthPage() {
   const [formType, setFormType] = useState<"register" | "login">("register")

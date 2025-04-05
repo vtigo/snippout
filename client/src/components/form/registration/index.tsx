@@ -5,15 +5,37 @@ import { Button } from "../../ui/button"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../../ui/form"
 import { Input } from "../../ui/input"
 import { RegistrationFormData, registrationFormSchema } from "./schema"
+import { createUser } from "@/lib/api/user"
+import { toast } from "sonner"
+import { useAuth } from "@/lib/auth/auth-context"
 
 function RegistrationForm() {
+  const { login } = useAuth()
   const form = useForm<RegistrationFormData>({
     resolver: zodResolver(registrationFormSchema)
   })
 
   async function onSubmit(values: RegistrationFormData) {
-    // TODO: Create account and login
-    console.log(values)
+    const { username, email, password } = values
+
+    const userResponse = await createUser({
+      username,
+      email,
+      password
+    })
+
+    if (!userResponse.success) {
+      toast("Failed to create account", { description: userResponse.error })
+      form.setValue("username", "")
+      form.setValue("email", "")
+      return
+    }
+
+    // const loginSuccess = await login(email, password)
+
+    // if (!loginSuccess) {
+    //   toast("Account created sucessfully, try loggin in.")
+    // }
   }
 
   return (
@@ -54,7 +76,7 @@ function RegistrationForm() {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input type="passoword" placeholder="*****" {...field} />
+                <Input type="password" placeholder="*****" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -68,14 +90,14 @@ function RegistrationForm() {
             <FormItem>
               <FormLabel>Confirm Password</FormLabel>
               <FormControl>
-                <Input type="passoword" placeholder="*****" {...field} />
+                <Input type="password" placeholder="*****" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
 
-        <Button type="submit">Sign up</Button>
+        <Button disabled={form.formState.isSubmitting} type="submit">Sign up</Button>
       </form>
     </Form>
   )

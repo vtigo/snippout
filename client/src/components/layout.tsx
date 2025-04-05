@@ -1,7 +1,8 @@
-import { Link, Outlet, useLocation } from 'react-router';
-import { Button } from './ui/button';
+import { Container } from '@/components/container';
+import { Button } from '@/components/ui/button';
+import { Toaster } from '@/components/ui/sonner';
 import { useAuth } from '@/lib/auth/auth-context';
-import { Container } from './container';
+import { Link, Outlet, useLocation } from 'react-router';
 
 function Layout() {
   const location = useLocation()
@@ -34,6 +35,8 @@ function Layout() {
           <Outlet />
         </Container>
       </main>
+
+      <Toaster />
     </div>
   );
 }
