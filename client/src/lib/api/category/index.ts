@@ -7,7 +7,8 @@ export async function createCategory(data: CreateCategoryDto) {
 }
 
 export async function getAllCategories() {
-  return apiRequest("get", ApiEndpoints.category.getAll)
+  const response = await apiRequest("get", ApiEndpoints.category.getAll)
+  return response.data
 }
 
 export async function getCategoryById(id: string) {
