@@ -44,9 +44,7 @@ UserSchema.pre('save', async function (next) {
   if (!this.isModified('password')) return next();
 
   try {
-    // Generate a salt
     const salt = await bcrypt.genSalt(10);
-    // Hash the password with salt
     this.password = await bcrypt.hash(this.password, salt);
     next();
   } catch (error: any) {
@@ -54,7 +52,6 @@ UserSchema.pre('save', async function (next) {
   }
 });
 
-// Add a method to compare passwords
 UserSchema.methods.comparePassword = async function (candidatePassword: string): Promise<boolean> {
   return bcrypt.compare(candidatePassword, this.password);
 };
