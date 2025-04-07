@@ -1,5 +1,5 @@
-import { Container } from '@/components/container';
-import { useTheme } from '@/components/theme-provider';
+import { Container } from '@/components/ui/container';
+import { useTheme } from '@/components/providers/theme-provider';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuPortal, DropdownMenuSeparator, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';

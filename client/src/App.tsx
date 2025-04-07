@@ -1,47 +1,44 @@
 import Layout from "@/components/layout"
-import { ProtectedRoute, PreAuthRoute } from "@/components/protected-route"
-import { AuthProvider } from "@/lib/auth/auth-context"
+import { PreAuthRoute, ProtectedRoute } from "@/components/protected-route"
 import AuthPage from "@/pages/auth.page"
 import DashboardPage from "@/pages/dashboard.page"
 import HomePage from "@/pages/home.page"
 import { BrowserRouter, Route, Routes } from "react-router"
-import { ThemeProvider } from "./components/theme-provider"
+import Providers from "./components/providers"
 import CategoryPage from "./pages/category.page"
 
 function App() {
   return (
-    <ThemeProvider>
-      <AuthProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Layout />}>
-              {/* Public routes */}
-              <Route index element={<HomePage />} />
+    <Providers>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            {/* Public routes */}
+            <Route index element={<HomePage />} />
 
-              <Route path="/auth" element={
-                <PreAuthRoute>
-                  <AuthPage />
-                </PreAuthRoute>
-              } />
+            <Route path="/auth" element={
+              <PreAuthRoute>
+                <AuthPage />
+              </PreAuthRoute>
+            } />
 
-              {/* Protected routes */}
-              <Route path="/dashboard" element={
-                <ProtectedRoute>
-                  <DashboardPage />
-                </ProtectedRoute>
-              } />
+            {/* Protected routes */}
+            <Route path="/dashboard" element={
+              <ProtectedRoute>
+                <DashboardPage />
+              </ProtectedRoute>
+            } />
 
-              <Route path="/categories" element={
-                <ProtectedRoute>
-                  <CategoryPage />
-                </ProtectedRoute>
-              } />
+            <Route path="/categories" element={
+              <ProtectedRoute>
+                <CategoryPage />
+              </ProtectedRoute>
+            } />
 
-            </Route>
-          </Routes>
-        </BrowserRouter>
-      </AuthProvider>
-    </ThemeProvider>
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </Providers>
   )
 }
 

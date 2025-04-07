@@ -2,7 +2,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { useAuth } from "@/lib/auth/auth-context";
 
 function DashboardPage() {
-  const { user } = useAuth();
+  const { user } = useAuth()
 
   return (
     <section className="py-24">
@@ -45,9 +45,19 @@ function DashboardPage() {
           </CardContent>
         </Card>
 
+        <Card>
+          <CardHeader>
+            <CardTitle>Categories</CardTitle>
+            <CardDescription>Your categories</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <p className="text-muted-foreground">You don't have any categories yet.</p>
+          </CardContent>
+        </Card>
+
       </div>
     </section>
-  );
+  )
 }
 
-export default DashboardPage;
+export default DashboardPage
