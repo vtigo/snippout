@@ -34,6 +34,7 @@ function Layout() {
             ) : (
               <div className="flex flex-row gap-4 items-center">
                 <Link className={`${isCurrentRoute("dashboard") && "text-primary"} font-medium`} to="/dashboard">Dashboard</Link>
+                <Link className={`${isCurrentRoute("categories") && "text-primary"} font-medium`} to="/categories">Categories</Link>
                 <DropdownMenu>
                   <DropdownMenuTrigger>
                     <Avatar className='cursor-pointer'>

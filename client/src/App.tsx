@@ -6,6 +6,7 @@ import DashboardPage from "@/pages/dashboard.page"
 import HomePage from "@/pages/home.page"
 import { BrowserRouter, Route, Routes } from "react-router"
 import { ThemeProvider } from "./components/theme-provider"
+import CategoryPage from "./pages/category.page"
 
 function App() {
   return (
@@ -29,6 +30,13 @@ function App() {
                   <DashboardPage />
                 </ProtectedRoute>
               } />
+
+              <Route path="/categories" element={
+                <ProtectedRoute>
+                  <CategoryPage />
+                </ProtectedRoute>
+              } />
+
             </Route>
           </Routes>
         </BrowserRouter>

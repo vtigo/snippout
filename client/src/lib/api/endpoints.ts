@@ -11,6 +11,13 @@ const ApiEndpoints = {
     create: "/user",
     update: (id: string) => `/user/${id}`,
     delete: (id: string) => `/user/${id}`,
+  },
+  category: {
+    getAll: "/category",
+    getById: (id: string) => `/category/${id}`,
+    create: "/category",
+    update: (id: string) => `/category/${id}`,
+    delete: (id: string) => `/category/${id}`
   }
 }
 

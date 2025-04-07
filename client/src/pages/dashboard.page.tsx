@@ -44,6 +44,7 @@ function DashboardPage() {
             <p className="text-muted-foreground">You don't have any snippets yet.</p>
           </CardContent>
         </Card>
+
       </div>
     </section>
   );
